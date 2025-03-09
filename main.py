@@ -44,7 +44,7 @@ async def on_message(message):
     for pattern in suspicious_links:
         if re.search(pattern, message.content, re.IGNORECASE):
             await message.delete()
-            await message.channel.send(f"🚨 {message.author.mention} ห้ามโพสต์ลิงก์ต้องสงสัย!")
+            await message.channel.send(f"🚨 {message.author.mention} ห้ามโพสต์ลิงก์ต้องสงสัย! dev. น้อวโฟสสุดหล่อรวย")
             return
 
     # ตรวจสอบลิงก์ที่ถูกย่อ
