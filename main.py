@@ -11,9 +11,8 @@ intents.message_content = True
 
 bot = commands.Bot(command_prefix="!", intents=intents)
 
-# รายการโดเมนต้องสงสัย
 suspicious_links = [
-    r"steamcommunity\.com\/gift-card\/pay\/",
+    r"steamcommunity\.com\/gift-card\/pay",
     r"steanmecomnmunity\.com\/\d+",
     r"freegift\.xyz",
     r"discordnitro\.xyz",
@@ -21,6 +20,7 @@ suspicious_links = [
     r"steamspecial\.xyz",
     r"freenitro\.club",
 ]
+# รายการโดเมนต้องสงสัย
 
 # รายการลิงก์ย่อที่น่าสงสัย
 url_shorteners = [
