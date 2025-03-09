@@ -44,14 +44,14 @@ async def on_message(message):
     for pattern in suspicious_links:
         if re.search(pattern, message.content, re.IGNORECASE):
             await message.delete()
-            await message.channel.send(f"🚨 {message.author.mention} ห้ามโพสต์ลิงก์ต้องสงสัย!bydev.น้อวโฟสสุดหล่อรวย")
+            await message.channel.send(f"🚨 {message.author.mention} ห้ามโพสต์ลิงก์ต้องสงสัย!devby.น้อวโฟสสุดหล่อรวย")
             return
 
     # ตรวจสอบลิงก์ที่ถูกย่อ
     for shortener in url_shorteners:
         if re.search(shortener, message.content, re.IGNORECASE):
             await message.delete()
-            await message.channel.send(f"🚨 {message.author.mention} ห้ามโพสต์ลิงก์ที่ถูกย่อ (อาจเป็นไวรัส)!")
+            await message.channel.send(f"🚨 {message.author.mention} ห้ามโพสต์ลิงก์ที่ถูกย่อ (อาจเป็นไวรัส)!devby.น้อวโฟสสุดหล่อรวย")
             return
 
     await bot.process_commands(message)
