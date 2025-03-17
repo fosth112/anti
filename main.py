@@ -35,6 +35,7 @@ url_shorteners = [
 ]
 
 EXEMPT_ROLE_ID = 1083402543989792839  # ID ยศที่ได้รับการยกเว้น
+EXEMPT_ROLE_ID = 1297459096781455411
 EXEMPT_CHANNEL_ID = 1338139756965396521  # ID ช่องที่ได้รับการยกเว้น
 
 @bot.event
