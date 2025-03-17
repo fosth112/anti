@@ -11,10 +11,8 @@ intents.message_content = True
 
 bot = commands.Bot(command_prefix="!", intents=intents)
 
-# ลิงก์ทุกประเภท
 link_pattern = r"https?:\/\/\S+"
 
-# ลิงก์ที่ต้องสงสัย
 suspicious_links = [
     r"steamcommunity\.com\/gift-card\/pay",
     r"steanmecomnmunity\.com\/\d+",
@@ -25,7 +23,6 @@ suspicious_links = [
     r"freenitro\.club",
 ]
 
-# ลิงก์ย่อ
 url_shorteners = [
     r"bit\.ly\/[a-zA-Z0-9]+",
     r"tinyurl\.com\/[a-zA-Z0-9]+",
@@ -34,9 +31,9 @@ url_shorteners = [
     r"goo\.gl\/[a-zA-Z0-9]+",
 ]
 
-# เพิ่ม Role ID ได้หลายยศในลิสต์นี้
-EXEMPT_ROLE_IDS = [1083402543989792839, 1297459096781455411]  
-EXEMPT_CHANNEL_ID = 1338139756965396521  # ID ช่องที่ได้รับการยกเว้น
+EXEMPT_ROLE_IDS = [1083402543989792839, 1297459096781455411, 1279035210855616513]
+EXEMPT_CHANNEL_ID = 1338139756965396521
+EXEMPT_CATEGORY_ID = 1279035381987151905  # เพิ่มหมวดหมู่ที่ละเว้น
 
 @bot.event
 async def on_ready():
@@ -47,30 +44,32 @@ async def on_message(message):
     if message.author == bot.user:
         return
 
-    # ข้ามการตรวจสอบสำหรับช่องที่ได้รับการยกเว้น
+    # ละเว้นข้อความในหมวดหมู่ที่ระบุ
+    if message.channel.category and message.channel.category.id == EXEMPT_CATEGORY_ID:
+        await bot.process_commands(message)
+        return
+
+    # ละเว้นช่องที่ระบุ
     if message.channel.id == EXEMPT_CHANNEL_ID:
         await bot.process_commands(message)
         return
 
-    # ตรวจสอบว่าสมาชิกมียศที่ได้รับการยกเว้นหรือไม่
+    # ละเว้นสมาชิกที่มียศที่กำหนด
     if any(role.id in EXEMPT_ROLE_IDS for role in message.author.roles):
         await bot.process_commands(message)
         return
 
-    # ตรวจสอบลิงก์ทุกประเภท
     if re.search(link_pattern, message.content, re.IGNORECASE):
         await message.delete()
         await message.channel.send(f"🚨 {message.author.mention} ห้ามโพสต์ลิงก์ในช่องนี้! devby.น้อวโฟสสุดหล่อรวย")
         return
 
-    # ตรวจสอบข้อความว่ามีลิงก์ไวรัสหรือไม่
     for pattern in suspicious_links:
         if re.search(pattern, message.content, re.IGNORECASE):
             await message.delete()
             await message.channel.send(f"🚨 {message.author.mention} ห้ามโพสต์ลิงก์ต้องสงสัย! devby.น้อวโฟสสุดหล่อรวย")
             return
 
-    # ตรวจสอบลิงก์ที่ถูกย่อ
     for shortener in url_shorteners:
         if re.search(shortener, message.content, re.IGNORECASE):
             await message.delete()
