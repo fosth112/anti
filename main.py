@@ -34,8 +34,8 @@ url_shorteners = [
     r"goo\.gl\/[a-zA-Z0-9]+",
 ]
 
-EXEMPT_ROLE_ID = 1083402543989792839  # ID ยศที่ได้รับการยกเว้น
-EXEMPT_ROLE_ID = 1297459096781455411
+# เพิ่ม Role ID ได้หลายยศในลิสต์นี้
+EXEMPT_ROLE_IDS = [1083402543989792839, 1297459096781455411]  
 EXEMPT_CHANNEL_ID = 1338139756965396521  # ID ช่องที่ได้รับการยกเว้น
 
 @bot.event
@@ -53,7 +53,7 @@ async def on_message(message):
         return
 
     # ตรวจสอบว่าสมาชิกมียศที่ได้รับการยกเว้นหรือไม่
-    if any(role.id == EXEMPT_ROLE_ID for role in message.author.roles):
+    if any(role.id in EXEMPT_ROLE_IDS for role in message.author.roles):
         await bot.process_commands(message)
         return
 
